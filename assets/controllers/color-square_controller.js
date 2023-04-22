@@ -15,33 +15,39 @@ export default class extends Controller {
  
     connect() {
         console.log(this.colorIdValue);
-        this.selectedColorId = this.element.dataset.colorId;
+
+        if (this.colorIdValue) {
+            this.setSelectedColor(this.colorIdValue);
+        }
         //this.selectTarget.classList.add("d-none");
-        this.selectTarget.value = this.selectedColorId;
     }
 
     selectColor(event) {
-        //console.log(this.colorSquareTargets);
-        var colorId = event.currentTarget.dataset.colorId;
-        //console.log(colorId);
+        this.setSelectedColor(event.currentTarget.dataset.colorId);
+    }
 
-        this.colorSquareTargets.forEach( (square) => {
-            //console.log(square.dataset.colorId);
-            if (colorId === square.dataset.colorId) {
-                if (!square.classList.contains('selected')) {
-                    square.classList.add('selected');
-                    this.selectedColorId = colorId;
-                } else {
-                    square.classList.remove('selected');
-                    this.selectedColorId = '';
-                }
-            } else {
-                square.classList.remove('selected');
+    findSelectedColorSquare() {
+        return this.colorSquareTargets.find( (element) => element.dataset.colorId == this.selectedColorId)
+    }
+
+    setSelectedColor(clickedColorId) {
+
+
+        if (clickedColorId === this.selectedColorId) {
+            this.findSelectedColorSquare().classList.remove('selected');
+
+            this.selectedColorId = null;
+            this.selectTarget.value = '';
+
+        }  else {
+            if (this.selectedColorId) {
+                this.findSelectedColorSquare().classList.remove('selected');
             }
-            
-        }); 
 
-        this.selectTarget.value = this.selectedColorId;
+            this.selectedColorId = clickedColorId;
 
+            this.findSelectedColorSquare().classList.add('selected');
+            this.selectTarget.value = clickedColorId;
+        }
     }
 }
