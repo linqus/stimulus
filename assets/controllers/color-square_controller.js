@@ -6,10 +6,14 @@ export default class extends Controller {
         'colorSquare',
         'select',
     ];
+
+    selectedColorId = '';
  
     connect() {
         //console.log(this.element.innerHTML);
-        this.selectTarget.classList.add("d-none");
+        this.selectedColorId = this.element.dataset.colorId;
+        //this.selectTarget.classList.add("d-none");
+        this.selectTarget.value = this.selectedColorId;
     }
 
     selectColor(event) {
@@ -22,8 +26,10 @@ export default class extends Controller {
             if (colorId === square.dataset.colorId) {
                 if (!square.classList.contains('selected')) {
                     square.classList.add('selected');
+                    this.selectedColorId = colorId;
                 } else {
                     square.classList.remove('selected');
+                    this.selectedColorId = '';
                 }
             } else {
                 square.classList.remove('selected');
@@ -31,11 +37,7 @@ export default class extends Controller {
             
         }); 
 
-        if (!event.currentTarget.classList.contains('selected')) {
-            colorId = '';
-        }
-
-        this.selectTarget.value = colorId;
+        this.selectTarget.value = this.selectedColorId;
 
     }
 }
