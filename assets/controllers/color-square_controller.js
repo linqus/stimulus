@@ -7,10 +7,14 @@ export default class extends Controller {
         'select',
     ];
 
-    selectedColorId = '';
+    static values = {
+        colorId: Number,
+    }
+
+    selectedColorId = null;
  
     connect() {
-        //console.log(this.element.innerHTML);
+        console.log(this.colorIdValue);
         this.selectedColorId = this.element.dataset.colorId;
         //this.selectTarget.classList.add("d-none");
         this.selectTarget.value = this.selectedColorId;
@@ -19,10 +23,10 @@ export default class extends Controller {
     selectColor(event) {
         //console.log(this.colorSquareTargets);
         var colorId = event.currentTarget.dataset.colorId;
-        console.log(colorId);
+        //console.log(colorId);
 
         this.colorSquareTargets.forEach( (square) => {
-            console.log(square.dataset.colorId);
+            //console.log(square.dataset.colorId);
             if (colorId === square.dataset.colorId) {
                 if (!square.classList.contains('selected')) {
                     square.classList.add('selected');
