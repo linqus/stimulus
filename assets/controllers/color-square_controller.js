@@ -10,44 +10,26 @@ export default class extends Controller {
     static values = {
         colorId: Number,
     }
-
-    selectedColorId = null;
  
     connect() {
-        console.log(this.colorIdValue);
+        this.selectTarget.classList.add("d-none");
+    }
 
-        if (this.colorIdValue) {
-            this.setSelectedColor(this.colorIdValue);
-        }
-        //this.selectTarget.classList.add("d-none");
+    colorIdValueChanged() {
+
+        this.selectTarget.value = this.colorIdValue ? this.colorIdValue : '' ;
+
+        this.colorSquareTargets.forEach(element => {
+            if (element.dataset.colorId == this.colorIdValue) {
+                element.classList.toggle('selected');
+            } else {
+                element.classList.remove('selected');
+            }
+        }); 
     }
 
     selectColor(event) {
-        this.setSelectedColor(event.currentTarget.dataset.colorId);
-    }
-
-    findSelectedColorSquare() {
-        return this.colorSquareTargets.find( (element) => element.dataset.colorId == this.selectedColorId)
-    }
-
-    setSelectedColor(clickedColorId) {
-
-
-        if (clickedColorId === this.selectedColorId) {
-            this.findSelectedColorSquare().classList.remove('selected');
-
-            this.selectedColorId = null;
-            this.selectTarget.value = '';
-
-        }  else {
-            if (this.selectedColorId) {
-                this.findSelectedColorSquare().classList.remove('selected');
-            }
-
-            this.selectedColorId = clickedColorId;
-
-            this.findSelectedColorSquare().classList.add('selected');
-            this.selectTarget.value = clickedColorId;
-        }
-    }
+        const clickedColorId = event.currentTarget.dataset.colorId;
+        this.colorIdValue = this.colorIdValue == clickedColorId ? null : clickedColorId;
+    } 
 }
