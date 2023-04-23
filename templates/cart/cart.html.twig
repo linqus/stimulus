@@ -43,11 +43,18 @@
                                 </div>
                                 <div class="col-3">
                                     <form
+                                        data-action="submit-confirm#onSubmit"
                                         action="{{ path('app_cart_remove_item', {
                                             productId: item.product.id,
                                             colorId: item.color ? item.color.id: null,
                                         }) }}"
                                         method="POST"
+                                        {{ stimulus_controller('submit-confirm', {
+                                            title: 'Really?',
+                                            msg: 'Do you want remove from cart?',
+                                            icon: 'warning',
+                                            confirm: 'Remove',
+                                        }) }}
                                     >
                                         <input type="hidden" name="_token" value="{{ csrf_token('remove_item') }}" />
 
