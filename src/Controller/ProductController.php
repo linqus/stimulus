@@ -21,10 +21,17 @@ class ProductController extends AbstractController
     public function index(Request $request, CategoryRepository $categoryRepository, ProductRepository $productRepository, Category $category = null): Response
     {
         $searchTerm = $request->query->get('q');
+        $isPreview = $request->query->has('preview');
         $products = $productRepository->search(
             $category,
             $searchTerm
         );
+        
+        if ($isPreview) {
+            return $this->render('product/_searchPreview.html.twig', [
+                'products' => $products,
+            ]);
+        }
 
         return $this->render('product/index.html.twig', [
             'currentCategory' => $category,
