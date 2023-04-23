@@ -54,6 +54,7 @@
                                             msg: 'Do you want remove from cart?',
                                             icon: 'warning',
                                             confirm: 'Remove',
+                                            submitAsync: true,
                                         }) }}
                                     >
                                         <input type="hidden" name="_token" value="{{ csrf_token('remove_item') }}" />

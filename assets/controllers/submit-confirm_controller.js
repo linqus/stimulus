@@ -8,10 +8,10 @@ export default class extends Controller {
         msg: String,
         icon: String,
         confirm: String,
+        submitAsync: Boolean,
     }
 
     connect() {
-        console.log(this);
     }
 
     onSubmit(event) {
@@ -25,12 +25,24 @@ export default class extends Controller {
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
             confirmButtonText: this.confirmValue || 'Yes',
-          }).then((result) => {
-            if (result.isConfirmed) {
-                this.element.submit();  
-              
+            showLoaderOnConfirm: true,
+            preConfirm: () => {
+                return this.submitForm();
             }
-          })
+          });
+    }
+
+    submitForm() {
+
+        if (!this.submitAsyncValue) {
+            this.element.submit();
+            return;
+        }
+        
+        return fetch(this.element.action,{
+            method: this.element.method,
+            body: new URLSearchParams(new FormData(this.element)),
+        })
     }
 
 }
