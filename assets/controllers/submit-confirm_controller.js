@@ -30,19 +30,24 @@ export default class extends Controller {
                 return this.submitForm();
             }
           });
+          
     }
 
-    submitForm() {
+    async submitForm() {
 
         if (!this.submitAsyncValue) {
             this.element.submit();
             return;
         }
         
-        return fetch(this.element.action,{
+        const response = await fetch(this.element.action,{
             method: this.element.method,
             body: new URLSearchParams(new FormData(this.element)),
-        })
+        });
+
+        this.dispatch('async:submitted', {
+            response,
+        });
     }
 
 }

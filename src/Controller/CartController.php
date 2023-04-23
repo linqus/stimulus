@@ -21,12 +21,18 @@ class CartController extends AbstractController
     /**
      * @Route("/cart", name="app_cart")
      */
-    public function shoppingCart(CartStorage $cartStorage, ProductRepository  $productRepository): Response
+    public function shoppingCart(CartStorage $cartStorage, ProductRepository  $productRepository, Request $request): Response
     {
         $featuredProduct = $productRepository->findFeatured();
         $addToCartForm = $this->createForm(AddItemToCartFormType::class, null, [
             'product' => $featuredProduct,
         ]);
+
+        if ($request->query->get('cartList')) {
+            return $this->render('cart/_cartList.html.twig',[
+                'cart' => $cartStorage->getOrCreateCart(),
+            ]);
+        }
 
         return $this->render('cart/cart.html.twig', [
             'cart' => $cartStorage->getOrCreateCart(),
