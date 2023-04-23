@@ -1,4 +1,5 @@
 import { Controller } from '@hotwired/stimulus';
+import { useClickOutside, useDebounce } from 'stimulus-use';
 
 export default class extends Controller {
 
@@ -7,23 +8,40 @@ export default class extends Controller {
         'result',
     ]
 
+    static debounces = [
+        'showSearchPreview',
+    ]
+
     static values = {
         url: String,
     }
 
     connect() {
-        console.log(this.searchBoxTarget);
-        this.searchBoxTarget.on
+        useClickOutside(this, {
+            element: this.resultTarget,
+        });
+        useDebounce(this)
+
     }
 
-    async onSearchInput(event) {
-        var queryString = event.currentTarget.value;
+    onSearchInput(event) {
+        this.showSearchPreview({params: event.currentTarget.value});
+    }
+    
+    clickOutside(event) {
+        console.log('clicked outside - you can hide it now');
+        this.resultTarget.innerHTML = '';
+    }
 
+
+
+    async showSearchPreview(query) {
+        console.log(query);
         const params = new URLSearchParams({
-            q: queryString,
+            q: query.params,
             preview: true
         }); 
-        console.log(this.urlValue + '?' + params);
+
         const response = await fetch(this.urlValue + '?' + params);
 
         this.resultTarget.innerHTML = await response.text();
