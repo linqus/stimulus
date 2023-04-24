@@ -8,6 +8,8 @@
         "bootstrap": "4",
         "chart.js": "^3.4.1",
         "core-js": "^3.0.0",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "regenerator-runtime": "^0.13.2",
         "stimulus-use": "^0.52.0",
         "sweetalert2": "^11.7.3",
