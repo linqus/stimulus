@@ -7,6 +7,15 @@ export default class extends Controller {
     }
 
     onChartConnect(event) {
-        console.log('Iv catch chartjs:connect');
+        this.chart = event.detail.chart;
+        //console.log('Iv catch chartjs:connect');
+        setTimeout( () => {this.setNewData()},5000 )
+
+        this.setNewData
+    }
+
+    setNewData() {
+        this.chart.data.datasets[0].data[2] = 3000;
+        this.chart.update();
     }
 }
