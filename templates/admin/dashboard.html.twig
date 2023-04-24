@@ -102,12 +102,10 @@
             <div class="col-10 mt-4">
                 <h1>Admin Dashboard</h1>
 
-                <div
-                    data-controller='admin-chart'
-                    data-action="chartjs:connect->admin-chart#onChartConnect"
-                >
-
-                {{ render_chart(chart) }}
+                {{ render_chart(chart,{
+                    'data-controller': 'admin-chart',
+                    'data-action': 'chartjs:connect->admin-chart#onChartConnect',
+                }) }}
             </div>
         </div>
     </div>
