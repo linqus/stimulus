@@ -12,14 +12,18 @@
                         data-bs-dismiss="modal"
                         aria-label="Close"></button>
             </div>
-            <div class="modal-body" data-modal-form-target="modalBody">
+            <div 
+                class="modal-body" 
+                data-modal-form-target="modalBody"
+                data-action="submit->modal-form#onSubmit"
+            >
                 {{ modalContent|default('Loading...') }}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
                         data-bs-dismiss="modal">{{ modalCancel|default('Cancel') }}
                 </button>
-                <button type="button" class="btn btn-primary">
+                <button type="button" class="btn btn-primary" data-action="modal-form#onSubmit">
                     {{ modalConfirm|default('Save')}}
                 </button>
             </div>
