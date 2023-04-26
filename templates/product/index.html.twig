@@ -23,28 +23,29 @@
                         </h1>
                     </div>
                     <div class="col-9">
-                        <form 
-                            {{ stimulus_controller('autocomplete', {
-                                url: path('app_homepage', {
-                                    preview: 1,
-                                })
-                            }) }}
-                        >
-                            <div class="input-group">
+                        <form>
+                            <div
+                                class="input-group"
+                                {{ stimulus_controller({
+                                    'autocomplete-transition': {
+                                        url: path('app_homepage', { preview: 1 })
+                                    }
+                                }) }}
+                            >
                                 <input
                                     name="q"
                                     value="{{ searchTerm }}"
                                     placeholder="Search products..."
                                     type="search"
                                     class="form-control"
-                                    data-autocomplete-target="input"
+                                    {{ stimulus_target('autocomplete-transition', 'input') }}
                                 >
-                                <div 
+
+                                <div
                                     class="search-preview"
-                                    data-autocomplete-target="results"
+                                    data-autocomplete-transition-target="results"
                                 ></div>
                             </div>
-                            
                         </form>
                     </div>
                 </div>
