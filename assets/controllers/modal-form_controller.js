@@ -1,10 +1,12 @@
 import { Controller } from "@hotwired/stimulus";
 import { Modal } from 'bootstrap';
+import $ from 'jquery';
 
 export default class extends Controller {
 
     static targets = [
         'modal',
+        'modalBody',
     ];
 
     static values = {
@@ -13,13 +15,20 @@ export default class extends Controller {
 
 
     connect() {
-        console.log('modal');
     }
 
     openModal(event) {
-        console.log(this.formUrlValue);
         const modal = new Modal(this.modalTarget);
-        modal.show()
+        this.modalBodyTarget.innerHTML = 'Loading...';
+        $.ajax({
+            method: 'GET',
+            url: this.formUrlValue+"?modal=1",
+        }).done((msg) => {
+            this.modalBodyTarget.innerHTML = msg;
+        });
+        
+        modal.show();
+
         
     }
 }   
