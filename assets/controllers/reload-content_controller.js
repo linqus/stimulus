@@ -9,7 +9,6 @@ export default class extends Controller {
     static targets = ['reloadContent'];
 
     connect() {
-        console.log('RC init');
     }
 
     async reloadContent(event) {

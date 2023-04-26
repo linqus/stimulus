@@ -10,7 +10,6 @@ export default class extends Controller {
 
     connect() {
         import('react-dom/client').then( (ReactDOM) => {
-            console.log(ReactDOM);
             ReactDOM
                 .createRoot(this.element)
                 .render(<FeaturedProduct product={this.productValue} />);
