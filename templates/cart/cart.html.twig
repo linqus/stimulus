@@ -12,11 +12,12 @@
             <div class="col-xs-12 col-lg-9 cart">
                 <h1>Shopping Cart</h1>
                 <div class="component-light p-3"
-                     {{ stimulus_controller('cart-list', {
-                        refreshUrl: path('app_cart', {
+                     {{ stimulus_controller('reload-content', {
+                        url: path('app_cart', {
                             cartList: true,
                         })
                      }) }}
+                     data-action="submit-confirm:async:submitted->reload-content#reloadContent"
                 >
                     {{ include('cart/_cartList.html.twig') }}
                 </div>
