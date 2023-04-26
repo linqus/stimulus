@@ -18,7 +18,7 @@ export default class extends Controller {
     }
 
     openModal(event) {
-        const modal = new Modal(this.modalTarget);
+        this.modal = new Modal(this.modalTarget);
         this.modalBodyTarget.innerHTML = 'Loading...';
         $.ajax({
             url: this.formUrlValue+"?modal=1",
@@ -26,19 +26,23 @@ export default class extends Controller {
             this.modalBodyTarget.innerHTML = msg;
         });
         
-        modal.show();
+        this.modal.show();
     }
 
     async onSubmit(event) {
         event.preventDefault();
         const $form = $(this.modalBodyTarget).find('form');
 
-        var response = await $.ajax({
-            method: $form.prop('method'),
-            url: this.formUrlValue + "?modal=1",
-            data: $form.serialize(),
-        });
-        this.modalBodyTarget.innerHTML = response;
-        console.log(response);
+        try {
+            await $.ajax({
+                method: $form.prop('method'),
+                url: this.formUrlValue + "?modal=1",
+                data: $form.serialize(),
+            });
+            this.modal.hide();
+        } catch(e) {
+            this.modalBodyTarget.innerHTML = e.responseText;
+        }
     }
+
 }   

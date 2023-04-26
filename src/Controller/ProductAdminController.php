@@ -38,21 +38,27 @@ class ProductAdminController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($product);
             $entityManager->flush();
-
-            return $this->redirectToRoute('product_admin_index');
+            if ($request->query->get('modal')) {
+                return new Response(null, 204);
+            } else {
+                return $this->redirectToRoute('product_admin_index');
+            }
+            
         }
         
         if ($request->query->get('modal')) {
             return $this->render('product_admin/_form.html.twig', [
                 'product' => $product,
                 'form' => $form->createView(),
-            ]);
+            ], new Response(null, $form->isSubmitted() && !$form->isValid() ? 422 : 200));
         }
 
-        return $this->render('product_admin/new.html.twig', [
-            'product' => $product,
-            'form' => $form->createView(),
-        ]);
+        return $this->render(
+            'product_admin/new.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]
+        );
     }
 
     /**
