@@ -41,6 +41,13 @@ class ProductAdminController extends AbstractController
 
             return $this->redirectToRoute('product_admin_index');
         }
+        
+        if ($request->query->get('modal')) {
+            return $this->render('product_admin/_form.html.twig', [
+                'product' => $product,
+                'form' => $form->createView(),
+            ]);
+        }
 
         return $this->render('product_admin/new.html.twig', [
             'product' => $product,
